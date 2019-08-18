@@ -159,10 +159,10 @@ Flask-Migrate 公开了两个类, ``Migrate`` 和 ``MigrateCommand``. ``Migrate`
     使用$EDITOR编辑修订脚本。
 
 - ``flask db upgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>``
-    升级数据库。如果没有给出``revision`` ，则假定为``"head"``。
+    升级数据库。如果没有给出 ``revision`` ，则假定为 ``"head"``。
     
 - ``flask db downgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>``
-    降级数据库。如果没有给出``revision`` ，则假定为 ``-1``。
+    降级数据库。如果没有给出 ``revision`` ，则假定为 ``-1``。
     
 - ``flask db stamp [--sql] [--tag TAG] <revision>``
     将数据库中的修订设置为作为参数给出的修订，而不执行任何迁移。
