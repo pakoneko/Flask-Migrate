@@ -91,7 +91,7 @@ Flask-Migrate 还支持Flask-Script命令行界面。这是一个示例应用程
     if __name__ == '__main__':
         manager.run()
 
-假设上面的脚本存储在一个名为 ``manage.py``的文件中。运行脚本可以访问所有数据库迁移命令::
+假设上面的脚本存储在一个名为 ``manage.py`` 的文件中。运行脚本可以访问所有数据库迁移命令::
 
     $ python manage.py db init
     $ python manage.py db migrate
