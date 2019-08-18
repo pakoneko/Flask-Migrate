@@ -49,7 +49,7 @@ Flask-Migrate 是一种扩展，它以正确的方式配置Alembic，以便使�
 
     $ flask db migrate
     
-迁移脚本需要被检查和编辑, 因为Alembic目前还没有检测到你对模型所做的每一个更改。 特别是, Alembic目前无法检测表名更改、列名更改或匿名命名的约束。 A有关限制的详细摘要可在 `Alembic autogenerate documentation <http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect>`_找到. 一旦完成，迁移脚本还需要添加到版本控制中。
+迁移脚本需要被检查和编辑, 因为Alembic目前还没有检测到你对模型所做的每一个更改。 特别是, Alembic目前无法检测表名更改、列名更改或匿名命名的约束。 A有关限制的详细摘要可在 `Alembic autogenerate documentation <http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect>`_ 找到. 一旦完成，迁移脚本还需要添加到版本控制中。
 
 然后你可以将迁移应用到数据库::
 
@@ -126,114 +126,114 @@ Flask-Migrate 可以与  `binds <http://flask-sqlalchemy.pocoo.org/binds/>`_  Fl
 命令参考
 -----------------
 
-Flask-Migrate exposes two classes, ``Migrate`` and ``MigrateCommand``. The ``Migrate`` class contains all the functionality of the extension. The ``MigrateCommand`` class is only used when it is desired to expose database migration commands through the Flask-Script extension.
+Flask-Migrate 公开了两个类, ``Migrate`` 和 ``MigrateCommand``. ``Migrate`` 类包含扩展的所有功能。 The ``MigrateCommand`` 类仅在需要通过 Flask-Script 扩展公开数据库迁移命令时才使用。
 
-The following example initializes the extension with the standard Flask command-line interface::
+下面的示例使用标准的Flask命令行接口初始化扩展::
 
     from flask_migrate import Migrate
     migrate = Migrate(app, db)
 
-The two arguments to ``Migrate`` are the application instance and the Flask-SQLAlchemy database instance. The ``Migrate`` constructor also takes additional keyword arguments, which are passed to Alembic's ``EnvironmentContext.configure()`` method. As is standard for all Flask extensions, Flask-Migrate can be initialized using the ``init_app`` method as well.
+``Migrate`` 的两个参数是应用程序实例和 Flask-SQLAlchemy 数据库实例。 The ``Migrate`` 构造函数还接受其他关键字参数, 这些参数被传递给 Alembic 的 ``EnvironmentContext.configure()`` 方法。 作为所有 Flask 扩展的标准, 也可以使用 ``init_app`` 方法初始化Flask-Migrate 。
 
-When using Flask-Script's command-line interface, the extension is initialized as follows::
+当使用 Flask-Script 的命令行界面时，扩展的初始化如下所示::
 
     from flask_migrate import Migrate, MigrateCommand
     migrate = Migrate(app, db)
     manager.add_command('db', MigrateCommand)
 
-After the extension is initialized, a ``db`` group will be added to the command-line options with several sub-commands, both in the ``flask`` command or with a ``manage.py`` type script created with Flask-Script. Below is a list of the available sub-commands:
+初始化扩展之后，将在命令行选项中添加一个 ``db`` 组，其中包含几个子命令，它们都位于``flask`` 命令中，或者使用 Flask-Script 创建一个 ``manage.py`` 类型的脚本。以下是可用子命令的列表:
 
 - ``flask db --help``
     Shows a list of available commands.
     
 - ``flask db init [--multidb]``
-    Initializes migration support for the application. The optional ``--multidb`` enables migrations for multiple databases configured as `Flask-SQLAlchemy binds <http://flask-sqlalchemy.pocoo.org/binds/>`_.
+    初始化应用程序的迁移支持。 可选的 ``--multidb`` 使迁移对多个数据库配置为 `Flask-SQLAlchemy 绑定 <http://flask-sqlalchemy.pocoo.org/binds/>`_.
     
 - ``flask db revision [--message MESSAGE] [--autogenerate] [--sql] [--head HEAD] [--splice] [--branch-label BRANCH_LABEL] [--version-path VERSION_PATH] [--rev-id REV_ID]``
-    Creates an empty revision script. The script needs to be edited manually with the upgrade and downgrade changes. See `Alembic's documentation <http://alembic.zzzcomputing.com/en/latest/index.html>`_ for instructions on how to write migration scripts. An optional migration message can be included.
+    创建一个空的修订脚本。 脚本需要通过升级和降级更改手动编辑。 查看 `Alembic 的文档 <http://alembic.zzzcomputing.com/en/latest/index.html>`_ 有关如何编写迁移脚本的说明。可以包含一个可选的迁移消息。
     
 - ``flask db migrate [--message MESSAGE] [--sql] [--head HEAD] [--splice] [--branch-label BRANCH_LABEL] [--version-path VERSION_PATH] [--rev-id REV_ID]``
-    Equivalent to ``revision --autogenerate``. The migration script is populated with changes detected automatically. The generated script should to be reviewed and edited as not all types of changes can be detected automatically. This command does not make any changes to the database, just creates the revision script.
+    与 ``revision --autogenerate``相同。 迁移脚本中填充了自动检测到的更改。应该检查和编辑生成的脚本，因为并不是所有类型的更改都可以自动检测到。此命令不对数据库做任何更改，只创建修订脚本。
 
 - ``flask db edit <revision>``
-    Edit a revision script using $EDITOR.
+    使用$EDITOR编辑修订脚本。
 
 - ``flask db upgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>``
-    Upgrades the database. If ``revision`` isn't given then ``"head"`` is assumed.
+    升级数据库。如果没有给出``revision`` ，则假定为``"head"``。
     
 - ``flask db downgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>``
-    Downgrades the database. If ``revision`` isn't given then ``-1`` is assumed.
+    降级数据库。如果没有给出``revision`` ，则假定为 ``-1``。
     
 - ``flask db stamp [--sql] [--tag TAG] <revision>``
-    Sets the revision in the database to the one given as an argument, without performing any migrations.
+    将数据库中的修订设置为作为参数给出的修订，而不执行任何迁移。
     
 - ``flask db current [--verbose]``
-    Shows the current revision of the database.
+    显示数据库的当前修订。
     
 - ``flask db history [--rev-range REV_RANGE] [--verbose]``
-    Shows the list of migrations. If a range isn't given then the entire history is shown.
+    显示迁移列表。如果没有给出范围，则显示整个历史。
 
 - ``flask db show <revision>``
-    Show the revision denoted by the given symbol.
+    显示由给定符号表示的修订。
 
 - ``flask db merge [--message MESSAGE] [--branch-label BRANCH_LABEL] [--rev-id REV_ID] <revisions>``
-    Merge two revisions together. Creates a new revision file.
+    合并两个修订。创建一个新的修订文件。
 
 - ``flask db heads [--verbose] [--resolve-dependencies]``
-    Show current available heads in the revision script directory.
+    在修订脚本目录中显示当前可用的头。
 
 - ``flask db branches [--verbose]``
-    Show current branch points.
+    显示当前分支点。
 
-Notes:
+备注:
  
-- All commands also take a ``--directory DIRECTORY`` option that points to the directory containing the migration scripts. If this argument is omitted the directory used is ``migrations``.
-- The default directory can also be specified as a ``directory`` argument to the ``Migrate`` constructor.
-- The ``--sql`` option present in several commands performs an 'offline' mode migration. Instead of executing the database commands the SQL statements that need to be executed are printed to the console.
-- Detailed documentation on these commands can be found in the `Alembic's command reference page <http://alembic.zzzcomputing.com/en/latest/api/commands.html>`_.
+- 所有命令还接受一个 ``--directory DIRECTORY`` 选项，该选项指向包含迁移脚本的目录。如果省略该参数，则使用的目录是 ``migrations`` 。
+- 默认目录也可以指定为 ``Migrate`` 构造函数的 ``directory`` 参数。
+- 几个命令中的 ``--sql`` 选项执行 'offline' 模式迁移。 不执行数据库命令，而是将需要执行的SQL语句打印到控制台。
+- 有关这些命令的详细文档可以在 `Alembic's command reference page <http://alembic.zzzcomputing.com/en/latest/api/commands.html>`_ 中找到。
 
-API Reference
+API 参考
 -------------
 
-The commands exposed by Flask-Migrate's command-line interface can also be accessed programmatically by importing the functions from module ``flask_migrate``. The available functions are:
+通过从模块 ``flask_migrate`` 导入函数，还可以通过编程方式访问 Flask-Migrate的命令行界面公开的命令。可用的功能如下:
 
 - ``init(directory='migrations', multidb=False)``
-    Initializes migration support for the application.
+    初始化应用程序的迁移支持。
 
 - ``revision(directory='migrations', message=None, autogenerate=False, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)``
-    Creates an empty revision script.
+    创建一个空的修订脚本。
 
 - ``migrate(directory='migrations', message=None, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)``
-    Creates an automatic revision script.
+    创建一个自动修订脚本。
 
 - ``edit(directory='migrations', revision='head')``
-    Edit revision script(s) using $EDITOR.
+    使用 $EDITOR 编辑修订脚本(单个或多个）。
 
 - ``merge(directory='migrations', revisions='', message=None, branch_label=None, rev_id=None)``
-    Merge two revisions together.  Creates a new migration file.
+    合并两个修订。创建一个新的迁移文件。
 
 - ``upgrade(directory='migrations', revision='head', sql=False, tag=None)``
-    Upgrades the database.
+    升级数据库。
 
 - ``downgrade(directory='migrations', revision='-1', sql=False, tag=None)``
-    Downgrades the database.
-
+    降级数据库。
+    
 - ``show(directory='migrations', revision='head')``
-    Show the revision denoted by the given symbol.
+    显示由给定符号表示的修订。
 
 - ``history(directory='migrations', rev_range=None, verbose=False)``
-    Shows the list of migrations. If a range isn't given then the entire history is shown.
+    显示迁移列表。如果没有给出范围，则显示整个历史。
 
 - ``heads(directory='migrations', verbose=False, resolve_dependencies=False)``
-    Show current available heads in the script directory.
+    在脚本目录中显示当前可用的头。
 
 - ``branches(directory='migrations', verbose=False)``
-    Show current branch points
+    显示当前分支点
 
 - ``current(directory='migrations', verbose=False, head_only=False)``
-    Shows the current revision of the database.
+    显示数据库的当前修订。
     
 - ``stamp(directory='migrations', revision='head', sql=False, tag=None)``
-    Sets the revision in the database to the one given as an argument, without performing any migrations.
+    将数据库中的修订设置为作为参数给出的修订，而不执行任何迁移。
 
-Note: For greater scripting flexibility you can also use the API exposed by Alembic directly.
+注意:为了获得更大的脚本灵活性，你还可以直接使用Alembic公开的API。
