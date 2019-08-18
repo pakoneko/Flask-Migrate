@@ -3,27 +3,27 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Flask-Migrate's documentation!
+欢迎访问Flask-Migrate的文档!
 ==========================================
 
-**Flask-Migrate** is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface or through the Flask-Script extension.
+**Flask-Migrate** 是一个扩展，它处理使用Alembic的Flask应用程序的SQLAlchemy数据库迁移。数据库操作可以通过Flask命令行界面或Flask-Script扩展来实现。
 
-Why Use Flask-Migrate vs. Alembic Directly?
+为什么要直接使用Flask-Migrate和Alembic？
 --------------------------------------
 
-Flask-Migrate is an extension that configures Alembic in the proper way to work with your Flask and Flask-SQLAlchemy application. In terms of the actual database migrations, everything is handled by Alembic so you get exactly the same functionality.
+Flask-Migrate 是一种扩展，它以正确的方式配置Alembic，以便使用Flask和Flask-SQLAlchemy应用程序。就实际的数据库迁移而言，一切都是由Alembic处理的，因此你可以获得完全相同的功能。
 
-Installation
+安装
 ------------
 
-Install Flask-Migrate with `pip`::
+使用 `pip` 安装 Flask-Migrate::
 
     pip install Flask-Migrate
 
-Example
+范例
 -------
 
-This is an example application that handles database migrations through Flask-Migrate::
+这是一个示例应用程序，它通过Flask-Migrate处理数据库迁移::
 
     from flask import Flask
     from flask_sqlalchemy import SQLAlchemy
@@ -39,36 +39,36 @@ This is an example application that handles database migrations through Flask-Mi
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(128))
 
-With the above application you can create a migration repository with the following command::
+使用上面的应用程序，你可以使用以下命令创建迁移存储库::
 
     $ flask db init
 
-This will add a `migrations` folder to your application. The contents of this folder need to be added to version control along with your other source files.
+这将为你的应用程序添加一个 `migrations` 文件夹。这个文件夹的内容需要与其他源文件一起添加到版本控制中
 
-You can then generate an initial migration::
+然后你可以生成初始的迁移::
 
     $ flask db migrate
     
-The migration script needs to be reviewed and edited, as Alembic currently does not detect every change you make to your models. In particular, Alembic is currently unable to detect table name changes, column name changes, or anonymously named constraints. A detailed summary of limitations can be found in the `Alembic autogenerate documentation <http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect>`_. Once finalized, the migration script also needs to be added to version control.
+迁移脚本需要被检查和编辑, 因为Alembic目前还没有检测到你对模型所做的每一个更改。 特别是, Alembic目前无法检测表名更改、列名更改或匿名命名的约束。 A有关限制的详细摘要可在 `Alembic autogenerate documentation <http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect>`_找到. 一旦完成，迁移脚本还需要添加到版本控制中。
 
-Then you can apply the migration to the database::
+然后你可以将迁移应用到数据库::
 
     $ flask db upgrade
     
-Then each time the database models change repeat the ``migrate`` and ``upgrade`` commands.
+然后，每次数据库模型更改时，重复 ``migrate`` 和 ``upgrade`` 命令。
 
-To sync the database in another system just refresh the `migrations` folder from source control and run the ``upgrade`` command.
+要在另一个系统中同步数据库，只需刷新源代码控制中的 `migrations` 文件夹并运行 ``upgrade`` 命令.
 
-To see all the commands that are available run this command::
+要查看所有可用的命令，请运行此命令::
 
     $ flask db --help
 
-Note that the application script must be set in the ``FLASK_APP`` environment variable for all the above commands to work, as required by the ``flask`` command line script.
+请注意，应用程序脚本必须在 ``FLASK_APP`` 环境变量中设置，以便所有上述命令都能工作，这与 ``flask`` 命令行脚本所要求的一样。
 
-Using Flask-Script
+使用 Flask-Script
 ------------------
 
-Flask-Migrate also supports the Flask-Script command-line interface. This is an example application that exposes all the database migration commands through Flask-Script::
+Flask-Migrate 还支持Flask-Script命令行界面。这是一个示例应用程序，它通过Flask-Script公开所有数据库迁移命令::
 
     from flask import Flask
     from flask_sqlalchemy import SQLAlchemy
@@ -91,17 +91,17 @@ Flask-Migrate also supports the Flask-Script command-line interface. This is an 
     if __name__ == '__main__':
         manager.run()
 
-Assuming the above script is stored in a file named ``manage.py``, all the database migration commands can be accessed by running the script::
+假设上面的脚本存储在一个名为 ``manage.py``的文件中。运行脚本可以访问所有数据库迁移命令::
 
     $ python manage.py db init
     $ python manage.py db migrate
     $ python manage.py db upgrade
     $ python manage.py db --help
 
-Configuration Callbacks
+配置回调
 -----------------------
 
-Sometimes applications need to dynamically insert their own settings into the Alembic configuration. A function decorated with the ``configure`` callback will be invoked after the configuration is read, and before it is used. The function can modify the configuration object, or replace it with a different one.
+有时应用程序需要动态地将自己的设置插入到Alembic配置中。用 ``configure`` 回调修饰的函数将在读取配置之后和使用配置之前被调用。该函数可以修改配置对象，或者用另一个对象替换它。
 
 ::
 
@@ -110,20 +110,20 @@ Sometimes applications need to dynamically insert their own settings into the Al
         # modify config object
         return config
 
-Multiple configuration callbacks can be defined simply by decorating multiple functions. The order in which multiple callbacks are invoked is undetermined.
+多个配置回调可以简单地通过修饰多个函数来定义。调用多个回调的顺序尚未确定。
 
-Multiple Database Support
+多数据库支持
 -------------------------
 
-Flask-Migrate can integrate with the  `binds <http://flask-sqlalchemy.pocoo.org/binds/>`_ feature of Flask-SQLAlchemy, making it possible to track migrations to multiple databases associated with an application.
+Flask-Migrate 可以与  `binds <http://flask-sqlalchemy.pocoo.org/binds/>`_  Flask-SQLAlchemy 的特性集成, 从而可以跟踪到与应用程序关联的多个数据库的迁移。
 
-To create a multiple database migration repository, add the ``--multidb`` argument to the ``init`` command::
+若要创建多个数据库迁移存储库，请添加 ``--multidb`` 参数到 ``init`` 命令::
 
     $ flask db init --multidb
 
-With this command, the migration repository will be set up to track migrations on your main database, and on any additional databases defined in the ``SQLALCHEMY_BINDS`` configuration option.
+使用这个命令，迁移存储库将被设置为跟踪主数据库上的迁移，以及在 ``SQLALCHEMY_BINDS`` 配置选项中定义的任何其他数据库上的迁移。
 
-Command Reference
+命令参考
 -----------------
 
 Flask-Migrate exposes two classes, ``Migrate`` and ``MigrateCommand``. The ``Migrate`` class contains all the functionality of the extension. The ``MigrateCommand`` class is only used when it is desired to expose database migration commands through the Flask-Script extension.
