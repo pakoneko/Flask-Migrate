@@ -115,7 +115,7 @@ Flask-Migrate 还支持Flask-Script命令行界面。这是一个示例应用程
 多数据库支持
 -------------------------
 
-Flask-Migrate 可以与  `binds <http://flask-sqlalchemy.pocoo.org/binds/>`_  Flask-SQLAlchemy 的特性集成, 从而可以跟踪到与应用程序关联的多个数据库的迁移。
+Flask-Migrate 可以与  `绑定 <http://flask-sqlalchemy.pocoo.org/binds/>`_  Flask-SQLAlchemy 的特性集成, 从而可以跟踪到与应用程序关联的多个数据库的迁移。
 
 若要创建多个数据库迁移存储库，请添加 ``--multidb`` 参数到 ``init`` 命令::
 
@@ -133,7 +133,7 @@ Flask-Migrate 公开了两个类, ``Migrate`` 和 ``MigrateCommand``. ``Migrate`
     from flask_migrate import Migrate
     migrate = Migrate(app, db)
 
-``Migrate`` 的两个参数是应用程序实例和 Flask-SQLAlchemy 数据库实例。 The ``Migrate`` 构造函数还接受其他关键字参数, 这些参数被传递给 Alembic 的 ``EnvironmentContext.configure()`` 方法。 作为所有 Flask 扩展的标准, 也可以使用 ``init_app`` 方法初始化Flask-Migrate 。
+``Migrate`` 的两个参数是应用程序实例和 Flask-SQLAlchemy 数据库实例。 ``Migrate`` 构造函数还接受其他关键字参数, 这些参数被传递给 Alembic 的 ``EnvironmentContext.configure()`` 方法。 作为所有 Flask 扩展的标准, 也可以使用 ``init_app`` 方法初始化Flask-Migrate 。
 
 当使用 Flask-Script 的命令行界面时，扩展的初始化如下所示::
 
@@ -141,7 +141,7 @@ Flask-Migrate 公开了两个类, ``Migrate`` 和 ``MigrateCommand``. ``Migrate`
     migrate = Migrate(app, db)
     manager.add_command('db', MigrateCommand)
 
-初始化扩展之后，将在命令行选项中添加一个 ``db`` 组，其中包含几个子命令，它们都位于``flask`` 命令中，或者使用 Flask-Script 创建一个 ``manage.py`` 类型的脚本。以下是可用子命令的列表:
+初始化扩展之后，将在命令行选项中添加一个 ``db`` 组，其中包含几个子命令，它们都位于 ``flask`` 命令中，或者使用 Flask-Script 创建一个 ``manage.py`` 类型的脚本。以下是可用子命令的列表:
 
 - ``flask db --help``
     Shows a list of available commands.
